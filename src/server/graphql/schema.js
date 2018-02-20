@@ -8,8 +8,17 @@ const typeDefs = `
 		username: String!
 	}
 
+	type Mutation {
+		login(username: String!, password: String!): User
+	}
+
 	type RootQuery {
 		viewer: User
+	}
+
+	schema {
+	  query: RootQuery
+	  mutation: Mutation
 	}
 `;
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import { render } from '@jaredpalmer/after';
-import { graphqlExpress } from 'apollo-server-express';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import bodyParser from 'body-parser';
 import schema from './graphql/schema';
 
@@ -13,6 +13,7 @@ server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .use('/graphql', bodyParser.json(), graphqlExpress({ schema }))
+  .use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
   .get('/*', async (req, res) => {
     try {
       const html = await render({
