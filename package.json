@@ -1,0 +1,27 @@
+{
+	"name": "universal-react-graphql",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "razzle start",
+		"build": "razzle build",
+		"start": "NODE_ENV=production node build/server.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@jaredpalmer/after": "^1.1.0",
+		"apollo-server-express": "^1.3.2",
+		"body-parser": "^1.18.2",
+		"express": "^4.16.2",
+		"graphql": "^0.13.1",
+		"graphql-tools": "^2.21.0",
+		"mongoose": "^5.0.6",
+		"razzle": "^0.8.12",
+		"react": "^16.2.0",
+		"react-dom": "^16.2.0",
+		"react-helmet": "^5.2.0",
+		"react-router-dom": "^4.2.2"
+	}
+}
