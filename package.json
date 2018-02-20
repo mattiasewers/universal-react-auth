@@ -18,6 +18,7 @@
 		"graphql": "^0.13.1",
 		"graphql-tools": "^2.21.0",
 		"mongoose": "^5.0.6",
+		"mongoose-bcrypt": "^1.5.0",
 		"razzle": "^0.8.12",
 		"react": "^16.2.0",
 		"react-dom": "^16.2.0",
