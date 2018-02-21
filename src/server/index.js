@@ -26,6 +26,9 @@ server
     req.login = user => {
       req.session.user = user;
     };
+    req.logout = () => {
+      req.session.user = null;
+    };
     next();
   })
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
@@ -34,7 +37,7 @@ server
     bodyParser.json(),
     graphqlExpress(req => ({
       schema,
-      context: { user: req.session.user, login: req.login }
+      context: { user: req.session.user, login: req.login, logout: req.logout }
     }))
   )
   .use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
@@ -44,7 +47,8 @@ server
         req,
         res,
         routes,
-        assets
+        assets,
+        headers: req.headers
       });
       res.send(html);
     } catch (error) {

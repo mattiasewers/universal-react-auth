@@ -34,7 +34,7 @@ export default ComposedComponent => {
       // Run all GraphQL queries in the component tree
       // and extract the resulting data
       if (!process.browser) {
-        const apollo = initApollo();
+        const apollo = initApollo(null, ctx.headers);
 
         try {
           // Run all GraphQL queries

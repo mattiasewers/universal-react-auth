@@ -4,7 +4,7 @@ export default {
 	RootQuery: {
 		viewer: (root, args, { user }) => {
 			if (!user) {
-				throw new Error('Please login!');
+				return null;
 			}
 			return User.findById(user._id);
 		}
@@ -23,6 +23,10 @@ export default {
 			login({ username: user.username, _id: user._id });
 
 			return { user };
+		},
+		logout(root, args, { logout }) {
+			logout();
+			return 'Logged out';
 		}
 	}
 };

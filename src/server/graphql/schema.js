@@ -10,11 +10,11 @@ const typeDefs = `
 
 	type Payload {
 		user: User!
-		token: String!
 	}
 
 	type Mutation {
 		login(username: String!, password: String!): Payload
+		logout: String
 	}
 
 	type RootQuery {
