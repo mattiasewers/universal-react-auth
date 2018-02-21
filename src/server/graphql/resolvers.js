@@ -6,11 +6,11 @@ export default {
 			if (!user) {
 				throw new Error('Please login!');
 			}
-			return User.findById(user.user_id);
+			return User.findById(user._id);
 		}
 	},
 	Mutation: {
-		async login(root, { username, password }, ctx) {
+		async login(root, { username, password }, { login }) {
 			const user = await User.findOne({ username }).exec();
 			if (!user) {
 				throw new Error('Wrong username or password');
@@ -19,6 +19,8 @@ export default {
 			if (!valid) {
 				throw new Error('Wrong username or password');
 			}
+
+			login({ username: user.username, _id: user._id });
 
 			return { user };
 		}

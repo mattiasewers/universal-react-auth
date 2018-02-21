@@ -14,6 +14,7 @@ const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 const server = express();
 server
   .disable('x-powered-by')
+  .set('trust proxy', 1)
   .use(
     session({
       secret: process.env.RAZZLE_SECRET,
@@ -21,11 +22,20 @@ server
       saveUninitialized: true
     })
   )
+  .use((req, res, next) => {
+    req.login = user => {
+      req.session.user = user;
+    };
+    next();
+  })
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .use(
     '/graphql',
     bodyParser.json(),
-    graphqlExpress(req => ({ schema, context: { user: req.user } }))
+    graphqlExpress(req => ({
+      schema,
+      context: { user: req.session.user, login: req.login }
+    }))
   )
   .use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }))
   .get('/*', async (req, res) => {
