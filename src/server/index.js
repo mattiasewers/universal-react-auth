@@ -1,8 +1,8 @@
 import express from 'express';
+import session from 'express-session';
 import { render } from '@jaredpalmer/after';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import bodyParser from 'body-parser';
-import jwt from 'express-jwt';
 import schema from './graphql/schema';
 
 import routes from '../shared/routes';
@@ -14,10 +14,16 @@ const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 const server = express();
 server
   .disable('x-powered-by')
+  .use(
+    session({
+      secret: process.env.RAZZLE_SECRET,
+      resave: false,
+      saveUninitialized: true
+    })
+  )
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .use(
     '/graphql',
-    jwt({ secret: process.env.RAZZLE_SECRET, credentialsRequired: false }),
     bodyParser.json(),
     graphqlExpress(req => ({ schema, context: { user: req.user } }))
   )
